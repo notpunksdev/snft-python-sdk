@@ -3,6 +3,7 @@
 ## v0.1.1 - 2026-05-07
 
 - Allow TON collection-level unlock requests without `item_address`.
+- Clarify private-source and secret-cartridge runtime boundaries in docs.
 
 ## v0.1.0 - 2026-05-07
 
