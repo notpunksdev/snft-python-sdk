@@ -1,0 +1,84 @@
+{
+  "name": "Skill NFT: deploy-bot",
+  "description": "Portable AI skill cartridge license for deployment automation.",
+  "image": "https://skilzzz.com/assets/deploy-bot.png",
+  "skill_id": "deploy-bot",
+  "bundle_hash": "sha256:7eade01a7104181aa182b6bb84117bc742c9b90855f74df28baa62403fa054e5",
+  "snft": {
+    "protocol": "snft",
+    "standard": "Skill NFT Protocol",
+    "version": "1.0",
+    "type": "agent_skill",
+    "skill_id": "deploy-bot",
+    "content": {
+      "mode": "encrypted_external",
+      "compression": "tar.gz",
+      "encryption": "aes-256-gcm",
+      "encrypted_sha256": "sha256:4c084524c9e9c35e2e01d29a6a5f7e31b55f39c1bd75a6f0d7801dd3cc0f4c33",
+      "plaintext_sha256": "sha256:7eade01a7104181aa182b6bb84117bc742c9b90855f74df28baa62403fa054e5",
+      "size": 1842231,
+      "uris": [
+        "https://skilzzz.com/api/skills/deploy-bot/cartridge"
+      ]
+    },
+    "unlock": {
+      "type": "notpunks_unlock_network",
+      "network": "notpunks",
+      "network_id": "notpunks-mainnet-1",
+      "scheme": "direct_key_v1",
+      "threshold": 1,
+      "registry": "https://skilzzz.com/api/snft/unlock-networks/notpunks-mainnet-1",
+      "ownership": "nft_owner"
+    },
+    "chains": [
+      {
+        "chain": "ton",
+        "standard": "TEP-62",
+        "metadata_standard": "TEP-64",
+        "proof": {
+          "method": "ton_proof",
+          "item_address": "EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c",
+          "collection_address": "EQBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBx",
+          "challenge": "snft-unlock:deploy-bot:sha256:4c084524c9e9c35e2e01d29a6a5f7e31b55f39c1bd75a6f0d7801dd3cc0f4c33"
+        }
+      },
+      {
+        "chain": "evm",
+        "standard": "ERC-721",
+        "metadata_standard": "ERC-721 Metadata JSON",
+        "proof": {
+          "method": "eip712",
+          "chain_id": 1,
+          "contract": "0x0000000000000000000000000000000000000000",
+          "token_id": "1",
+          "domain": "sNFT Protocol",
+          "challenge": "snft-unlock:deploy-bot:sha256:4c084524c9e9c35e2e01d29a6a5f7e31b55f39c1bd75a6f0d7801dd3cc0f4c33"
+        }
+      },
+      {
+        "chain": "solana",
+        "standard": "Metaplex NFT",
+        "metadata_standard": "Metaplex JSON",
+        "proof": {
+          "method": "solana_sign_message",
+          "mint": "11111111111111111111111111111111",
+          "collection": "collection-address",
+          "challenge": "snft-unlock:deploy-bot:sha256:4c084524c9e9c35e2e01d29a6a5f7e31b55f39c1bd75a6f0d7801dd3cc0f4c33"
+        }
+      }
+    ],
+    "runtime": {
+      "entrypoint": "SKILL.md",
+      "compatible_agents": ["notpunks-agent", "custom-agent"],
+      "permissions": ["agent_skill", "network"],
+      "platforms": ["linux", "macos"]
+    },
+    "creator": {
+      "wallet": "EQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAM9c"
+    },
+    "license": {
+      "kind": "paid",
+      "transferable": true
+    }
+  }
+}
