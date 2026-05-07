@@ -48,6 +48,19 @@ def test_ton_unlock_request_shape() -> None:
     assert validate_unlock_request(request, descriptor, adapter) == []
 
 
+def test_ton_collection_only_unlock_request_shape() -> None:
+    descriptor = load_metadata()["snft"]
+    adapter = select_chain_adapter(descriptor, ["ton"])
+    adapter["proof"].pop("item_address", None)
+    proof = {"method": "ton_proof", "wallet": "EQwallet", "ton_proof": {"payload": "signed"}}
+
+    request = create_chain_unlock_request(descriptor, adapter, "EQwallet", proof)
+
+    assert "item_address" not in request["nft"]
+    assert request["nft"]["collection_address"] == "EQBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBx"
+    assert validate_unlock_request(request, descriptor, adapter) == []
+
+
 def test_evm_unlock_request_shape() -> None:
     descriptor = load_metadata()["snft"]
     adapter = select_chain_adapter(descriptor, ["evm"])

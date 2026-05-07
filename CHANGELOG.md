@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.1 - 2026-05-07
+
+- Allow TON collection-level unlock requests without `item_address`.
+
 ## v0.1.0 - 2026-05-07
 
 - Initial Python SDK package.

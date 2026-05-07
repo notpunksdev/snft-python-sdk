@@ -79,7 +79,7 @@ class RuntimeAdapter:
 
 
 RUNTIME_ADAPTERS: dict[str, RuntimeAdapter] = {
-    "ton": RuntimeAdapter("ton", "ton_proof", ("item_address",)),
+    "ton": RuntimeAdapter("ton", "ton_proof", ()),
     "evm": RuntimeAdapter("evm", "eip712", ("chain_id", "contract", "token_id")),
     "solana": RuntimeAdapter("solana", "solana_sign_message", ("mint",)),
 }
@@ -203,11 +203,18 @@ def get_runtime_adapter(chain: str) -> RuntimeAdapter | None:
 def create_ton_nft_reference(adapter: dict[str, Any]) -> dict[str, Any]:
     proof = _as_dict(adapter.get("proof"))
     item_address = proof.get("item_address")
-    if not item_address:
-        raise SnftError("Missing required TON item_address")
-    nft = {"item_address": item_address}
+    collection_address = proof.get("collection_address")
+    if not item_address and not collection_address:
+        raise SnftError("Missing required TON item_address or collection_address")
+    nft: dict[str, Any] = {}
+    if item_address:
+        nft["item_address"] = item_address
     if proof.get("collection_address"):
         nft["collection_address"] = proof.get("collection_address")
+    if proof.get("item_index"):
+        nft["item_index"] = proof.get("item_index")
+    if proof.get("itemIndex"):
+        nft["item_index"] = proof.get("itemIndex")
     return nft
 
 
@@ -292,6 +299,8 @@ def validate_unlock_request(
     if request.get("challenge") != expected_challenge:
         issues.append(_issue("challenge_mismatch", "Unlock request challenge does not match descriptor challenge", "challenge"))
     nft = _as_dict(request.get("nft"))
+    if runtime.chain == "ton" and not (nft.get("item_address") or nft.get("collection_address")):
+        issues.append(_issue("nft_field_missing", "Missing NFT field: item_address or collection_address", "nft"))
     for field in runtime.required_nft_fields:
         if nft.get(field) in (None, ""):
             issues.append(_issue("nft_field_missing", f"Missing NFT field: {field}", f"nft.{field}"))
